@@ -2,6 +2,8 @@
 
 package lesson1
 
+import java.io.File
+
 /**
  * Сортировка времён
  *
@@ -96,8 +98,62 @@ fun sortAddresses(inputName: String, outputName: String) {
  * 99.5
  * 121.3
  */
+
+fun sortS(array: IntArray, min: Int, max: Int): IntArray {
+    val count = IntArray(max - min + 1)
+    for (i in array.indices) {
+        count[array[i] - min]++
+    }
+    var idx = 0
+    for (i in count.indices) {
+        for (j in 0 until count[i]) {
+            array[idx++] = i + min
+        }
+    }
+
+    return array
+}
+
+fun sort(array: IntArray): IntArray {
+    var min: Int
+    var max: Int
+    min = array[0]
+    max = min
+    for (i in array.indices) {
+        if (array[i] < min) {
+            min = array[i]
+        }
+        if (array[i] > max) {
+            max = array[i]
+        }
+    }
+
+    return sortS(array, min, max)
+}
+
 fun sortTemperatures(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val array = mutableListOf<String>()
+    File(inputName).forEachLine {
+        array.add(it)
+    }
+
+    val arr = IntArray(array.size)
+    for (i in array.indices) {
+        arr[i] = (array[i].toDouble() * 10).toInt()
+    }
+
+    sort(arr)
+
+    for (i in array.indices) {
+        array[i] = (arr[i].toDouble() / 10).toString()
+    }
+
+    for (i in array.indices) {
+        writer.write(array[i])
+        writer.newLine()
+    }
+    writer.close()
 }
 
 /**
@@ -129,8 +185,46 @@ fun sortTemperatures(inputName: String, outputName: String) {
  * 2
  * 2
  */
+fun repeatedNumber(list: IntArray): Int {
+    val count = mutableMapOf<Int, Int>()
+    for (i in list.indices) {
+        val n = list[i]
+        count[n] = (count[n] ?: 0) + 1
+    }
+    return count.maxWithOrNull(
+        Comparator { o1, o2 -> if (o1.value != o2.value) o1.value.compareTo(o2.value) else -o1.key.compareTo(o2.key) }
+    )?.key ?: -1
+}
+
 fun sortSequence(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+
+    val array = mutableListOf<String>()
+    File(inputName).forEachLine {
+        array.add(it)
+    }
+
+    val arr = IntArray(array.size)
+    for (i in array.indices) {
+        arr[i] = array[i].toInt()
+    }
+
+    val number = repeatedNumber(arr).toString()
+
+    var count = 0
+    if (number != "-1") {
+        for (i in array.indices) {
+            if (array[i] != number) {
+                writer.write(array[i])
+                writer.newLine()
+            } else count++
+        }
+    }
+    for (i in 0 until count) {
+        writer.write(number)
+        writer.newLine()
+    }
+    writer.close()
 }
 
 /**
@@ -148,6 +242,5 @@ fun sortSequence(inputName: String, outputName: String) {
  * Результат: second = [1 3 4 9 9 13 15 20 23 28]
  */
 fun <T : Comparable<T>> mergeArrays(first: Array<T>, second: Array<T?>) {
-    TODO()
 }
 

@@ -2,6 +2,9 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
+import java.util.LinkedList;
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class JavaTasks {
     /**
