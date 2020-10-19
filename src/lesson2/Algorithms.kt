@@ -2,6 +2,9 @@
 
 package lesson2
 
+import kotlin.math.sqrt
+
+
 /**
  * Получение наибольшей прибыли (она же -- поиск максимального подмассива)
  * Простая
@@ -101,7 +104,24 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
  * вернуть ту из них, которая встречается раньше в строке first.
  */
 fun longestCommonSubstring(first: String, second: String): String {
-    TODO()
+    var rez = ""
+    for (i in first.indices) {
+        for (j in second.indices) {
+            var jx = j
+            var ix = i
+            while (ix < first.length && jx < second.length && first[ix] == second[jx]) {
+                ix++
+                jx++
+            }
+            if (i != ix) {
+                if (ix - i > rez.length) {
+                    rez = first.substring(i, ix)
+                }
+            }
+        }
+    }
+
+    return rez
 }
 
 /**
@@ -113,7 +133,25 @@ fun longestCommonSubstring(first: String, second: String): String {
  *
  * Справка: простым считается число, которое делится нацело только на 1 и на себя.
  * Единица простым числом не считается.
+ * O(NsqrtN)
  */
+fun isPrime(n: Int): Boolean {
+    if (n < 2) return false
+    if (n == 2) return true
+    if (n % 2 == 0) return false
+    for (m in 3..sqrt(n.toDouble()).toInt() step 2) {
+        if (n % m == 0) return false
+    }
+    return true
+}
+
 fun calcPrimesNumber(limit: Int): Int {
-    TODO()
+    if (limit <= 1) return 0
+    var rez = 1
+    for (elem in 3..limit step 2){
+        if (isPrime(elem)){
+            rez++
+        }
+    }
+    return rez
 }
