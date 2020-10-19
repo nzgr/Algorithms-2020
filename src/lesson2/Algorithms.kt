@@ -102,6 +102,8 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
  * При сравнении подстрок, регистр символов *имеет* значение.
  * Если имеется несколько самых длинных общих подстрок одной длины,
  * вернуть ту из них, которая встречается раньше в строке first.
+ * производительность О(n^2)
+ * ресурсоемкость R(1)
  */
 fun longestCommonSubstring(first: String, second: String): String {
     var rez = ""
@@ -133,7 +135,8 @@ fun longestCommonSubstring(first: String, second: String): String {
  *
  * Справка: простым считается число, которое делится нацело только на 1 и на себя.
  * Единица простым числом не считается.
- * O(NsqrtN)
+ * производительность O(Nsqrt(N))
+ * ресурсоемкость R(1)
  */
 fun isPrime(n: Int): Boolean {
     if (n < 2) return false
@@ -148,8 +151,8 @@ fun isPrime(n: Int): Boolean {
 fun calcPrimesNumber(limit: Int): Int {
     if (limit <= 1) return 0
     var rez = 1
-    for (elem in 3..limit step 2){
-        if (isPrime(elem)){
+    for (elem in 3..limit step 2) {
+        if (isPrime(elem)) {
             rez++
         }
     }

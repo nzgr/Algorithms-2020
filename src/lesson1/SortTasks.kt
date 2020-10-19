@@ -97,6 +97,8 @@ fun sortAddresses(inputName: String, outputName: String) {
  * 24.7
  * 99.5
  * 121.3
+ * производительность О(n)
+ * ресурсоемкость R(n)
  */
 
 fun sortS(array: IntArray, min: Int, max: Int): IntArray {
@@ -184,7 +186,8 @@ fun sortTemperatures(inputName: String, outputName: String) {
  * 2
  * 2
  * 2
- *
+ * производительность О(n)
+ * ресурсоемкость R(n)
  */
 fun repeatedNumber(list: IntArray): Int {
     val count = mutableMapOf<Int, Int>()
