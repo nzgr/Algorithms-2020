@@ -184,6 +184,7 @@ fun sortTemperatures(inputName: String, outputName: String) {
  * 2
  * 2
  * 2
+ *
  */
 fun repeatedNumber(list: IntArray): Int {
     val count = mutableMapOf<Int, Int>()
@@ -191,7 +192,7 @@ fun repeatedNumber(list: IntArray): Int {
         val n = list[i]
         count[n] = (count[n] ?: 0) + 1
     }
-    return count.maxWithOrNull(
+    return count.maxWith(
         Comparator { o1, o2 -> if (o1.value != o2.value) o1.value.compareTo(o2.value) else -o1.key.compareTo(o2.key) }
     )?.key ?: -1
 }
