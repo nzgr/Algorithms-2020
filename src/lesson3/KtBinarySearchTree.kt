@@ -3,11 +3,12 @@ package lesson3
 import java.util.*
 import kotlin.math.max
 
+
 // attention: Comparable is supported but Comparator is not
 class KtBinarySearchTree<T : Comparable<T>> : AbstractMutableSet<T>(), CheckableSortedSet<T> {
 
-    private class Node<T>(
-        val value: T
+    class Node<T>(
+        var value: T
     ) {
         var left: Node<T>? = null
         var right: Node<T>? = null
@@ -78,9 +79,45 @@ class KtBinarySearchTree<T : Comparable<T>> : AbstractMutableSet<T>(), Checkable
      * (в Котлине тип параметера изменён с Object на тип хранимых в дереве данных)
      *
      * Средняя
+     *
+     * производительность O(N)
+     *
      */
+    private fun remove(root: Node<T>?, element: T): Node<T>? {
+        if (root == null) return null
+        var current = root
+        val z = element
+        if (z < current.value) {
+            current.left = remove(current.left, element)
+        } else if (z > current.value) {
+            current.right = remove(current.right, element)
+        } else {
+            if (current.left != null && current.right != null) {
+                var min = current.right
+                while (min?.left != null) {
+                    min = min.left
+                }
+                current.value = min!!.value
+                current.right = remove(current.right, current.value)
+            } else {
+                if (current.left != null) {
+                    current = current.left
+                } else if (current.right != null) {
+                    current = current.right
+                } else {
+                    current = null
+                }
+                size--
+            }
+        }
+
+        return current
+    }
+
     override fun remove(element: T): Boolean {
-        TODO()
+        val m = size
+        root = remove(root, element)
+        return m > size
     }
 
     override fun comparator(): Comparator<in T>? =
@@ -91,6 +128,15 @@ class KtBinarySearchTree<T : Comparable<T>> : AbstractMutableSet<T>(), Checkable
 
     inner class BinarySearchTreeIterator internal constructor() : MutableIterator<T> {
 
+        private var current: Node<T>? = root
+        private val stack = mutableListOf<Node<T>>()
+
+        init {
+            while(current?.left != null) {
+                stack.add(current!!)
+                current = current?.left
+            }
+        }
         /**
          * Проверка наличия следующего элемента
          *
@@ -101,10 +147,7 @@ class KtBinarySearchTree<T : Comparable<T>> : AbstractMutableSet<T>(), Checkable
          *
          * Средняя
          */
-        override fun hasNext(): Boolean {
-            // TODO
-            throw NotImplementedError()
-        }
+        override fun hasNext(): Boolean = current != null
 
         /**
          * Получение следующего элемента
@@ -120,8 +163,18 @@ class KtBinarySearchTree<T : Comparable<T>> : AbstractMutableSet<T>(), Checkable
          * Средняя
          */
         override fun next(): T {
-            // TODO
-            throw NotImplementedError()
+            if (!hasNext()) throw NoSuchElementException()
+            val rez = current!!.value
+            if (current?.right != null) {
+                current = current?.right
+                while(current?.left != null) {
+                    stack.add(current!!)
+                    current = current?.left
+                }
+            } else {
+                current = stack.removeLastOrNull()
+            }
+            return rez
         }
 
         /**
@@ -137,8 +190,7 @@ class KtBinarySearchTree<T : Comparable<T>> : AbstractMutableSet<T>(), Checkable
          * Сложная
          */
         override fun remove() {
-            // TODO
-            throw NotImplementedError()
+            TODO()
         }
 
     }
