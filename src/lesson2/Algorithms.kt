@@ -107,24 +107,33 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
  * ресурсоемкость R(1)
  */
 fun longestCommonSubstring(first: String, second: String): String {
-    var rez = ""
+    var rez = StringBuilder()
+    if (first.isEmpty() || second.isEmpty()) return ""
+
+    val num = Array(first.length) { IntArray(second.length) }
+    var max = 0
+    var last = 0
+
     for (i in first.indices) {
         for (j in second.indices) {
-            var jx = j
-            var ix = i
-            while (ix < first.length && jx < second.length && first[ix] == second[jx]) {
-                ix++
-                jx++
-            }
-            if (i != ix) {
-                if (ix - i > rez.length) {
-                    rez = first.substring(i, ix)
+            if (first[i] == second[j]) {
+                if (i == 0 || j == 0) num[i][j] = 1 else num[i][j] = 1 + num[i - 1][j - 1]
+                if (num[i][j] > max) {
+                    max = num[i][j]
+                    val x = i - num[i][j] + 1
+                    if (last == x) {
+                        rez.append(first[i])
+                    } else {
+                        last = x
+                        rez = StringBuilder()
+                        rez.append(first.substring(last, i + 1))
+                    }
                 }
             }
         }
     }
 
-    return rez
+    return rez.toString()
 }
 
 /**
