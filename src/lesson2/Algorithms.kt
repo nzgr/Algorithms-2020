@@ -81,6 +81,7 @@ fun optimizeBuyAndSell(inputName: String): Pair<Int, Int> {
  *
  * Общий комментарий: решение из Википедии для этой задачи принимается,
  * но приветствуется попытка решить её самостоятельно.
+ * производительность О(n)
  */
 fun josephTask(menNumber: Int, choiceInterval: Int): Int {
     var k = 0
@@ -102,7 +103,7 @@ fun josephTask(menNumber: Int, choiceInterval: Int): Int {
  * При сравнении подстрок, регистр символов *имеет* значение.
  * Если имеется несколько самых длинных общих подстрок одной длины,
  * вернуть ту из них, которая встречается раньше в строке first.
- * производительность О(n^2)
+ * производительность О(n^3)
  * ресурсоемкость R(1)
  */
 fun longestCommonSubstring(first: String, second: String): String {

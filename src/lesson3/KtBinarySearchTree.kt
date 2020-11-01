@@ -192,7 +192,6 @@ class KtBinarySearchTree<T : Comparable<T>> : AbstractMutableSet<T>(), Checkable
         override fun remove() {
             TODO()
         }
-
     }
 
     /**
