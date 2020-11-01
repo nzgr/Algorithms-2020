@@ -63,6 +63,7 @@ fun longestCommonSubSequence(first: String, second: String): String {
  * Если самых длинных возрастающих подпоследовательностей несколько (как в примере),
  * то вернуть ту, в которой числа расположены раньше (приоритет имеют первые числа).
  * В примере ответами являются 2, 8, 9, 12 или 2, 5, 9, 12 -- выбираем первую из них.
+ * производительность O(n^2)
  */
 fun longestIncreasingSubSequence(list: List<Int>): List<Int> {
     val n = list.size
