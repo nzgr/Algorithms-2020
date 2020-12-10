@@ -111,8 +111,12 @@ class KtOpenAddressingSet<T : Any>(private val bits: Int) : AbstractMutableSet<T
         var count = 0
         var next: T? = null
 
+        // производительность О(1)
+        // ресурсоемкость О(1)
         override fun hasNext() = count < size
 
+        // производительность О(n)
+        // ресурсоемкость О(n)
         override fun next(): T {
             if (!hasNext()) throw NoSuchElementException()
             count++
@@ -124,6 +128,8 @@ class KtOpenAddressingSet<T : Any>(private val bits: Int) : AbstractMutableSet<T
             return next as T
         }
 
+        // производительность О(1)
+        // ресурсоемкость О(1)
         override fun remove() {
             if (next == null) throw IllegalStateException()
             storage[i - 1] = DEL
