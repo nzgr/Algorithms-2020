@@ -54,7 +54,7 @@ class KtOpenAddressingSet<T : Any>(private val bits: Int) : AbstractMutableSet<T
         val startingIndex = element.startingIndex()
         var index = startingIndex
         var current = storage[index]
-        while (current != null) {
+        while (current != null && current != DEL) {
             if (current == element) {
                 return false
             }
