@@ -1,5 +1,6 @@
 package lesson5
 
+
 /**
  * Множество(таблица) с открытой адресацией на 2^bits элементов без возможности роста.
  */
@@ -77,6 +78,7 @@ class KtOpenAddressingSet<T : Any>(private val bits: Int) : AbstractMutableSet<T
      * Спецификация: [java.util.Set.remove] (Ctrl+Click по remove)
      *
      * Средняя
+     * производительность О(n)
      */
     override fun remove(element: T): Boolean {
         if (!contains(element)) return false
@@ -102,7 +104,31 @@ class KtOpenAddressingSet<T : Any>(private val bits: Int) : AbstractMutableSet<T
      *
      * Средняя (сложная, если поддержан и remove тоже)
      */
-    override fun iterator(): MutableIterator<T> {
-        TODO("not implemented")
+    override fun iterator(): MutableIterator<T> = Iterator()
+
+    inner class Iterator internal constructor(): MutableIterator<T> {
+        var i = 0
+        var count = 0
+        var next: T? = null
+
+        override fun hasNext() = count < size
+
+        override fun next(): T {
+            if (!hasNext()) throw NoSuchElementException()
+            count++
+            while (storage[i] == null || storage[i] == DEL) {
+                i++
+            }
+            next = storage[i] as T
+            i++
+            return next as T
+        }
+
+        override fun remove() {
+            if (next == null) throw IllegalStateException()
+            storage[i - 1] = DEL
+            count--
+            size--
+        }
     }
 }

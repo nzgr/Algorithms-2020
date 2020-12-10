@@ -82,7 +82,6 @@ class KtTrie : AbstractMutableSet<String>(), MutableSet<String> {
             TODO("Not yet implemented")
 
 
-            current = current.children['3']!!
         }
 
         override fun remove() {
