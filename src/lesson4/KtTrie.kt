@@ -1,5 +1,7 @@
 package lesson4
 
+import lesson3.KtBinarySearchTree
+
 /**
  * Префиксное дерево для строк
  */
@@ -68,8 +70,25 @@ class KtTrie : AbstractMutableSet<String>(), MutableSet<String> {
      *
      * Сложная
      */
-    override fun iterator(): MutableIterator<String> {
-        TODO()
-    }
+    override fun iterator(): MutableIterator<String> = TrieIterator()
 
+    inner class TrieIterator internal constructor() : MutableIterator<String> {
+        private var current = root
+        private val stack = mutableListOf<Node>()
+
+        override fun hasNext() = current.children != null
+
+        override fun next(): String {
+            TODO("Not yet implemented")
+
+
+            current = current.children['3']!!
+        }
+
+        override fun remove() {
+            TODO("Not yet implemented")
+        }
+
+
+    }
 }
